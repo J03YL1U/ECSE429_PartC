@@ -23,9 +23,9 @@ public class TodoTest {
     @Test
     public void testCreateTodo() throws JSONException {
 
-        String title = "Test";
+        String title = "title";
         boolean doneStatus = false;
-        String description = "Random";
+        String description = "description";
 
         RequestSpecification request = RestAssured.given();
 
@@ -55,9 +55,9 @@ public class TodoTest {
     public void testModifyTodo() {
 
         int todoId = ID;
-        String newTitle = "New Title";
+        String newTitle = "new title";
         boolean newDoneStatus = true;
-        String newDescription = "New Description";
+        String newDescription = "new description";
 
         RequestSpecification request = RestAssured.given();
 
