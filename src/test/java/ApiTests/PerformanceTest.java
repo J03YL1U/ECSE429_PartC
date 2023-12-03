@@ -3,6 +3,7 @@ package ApiTests;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.time.LocalTime;
 import java.util.Calendar;
 
 import com.sun.management.OperatingSystemMXBean;
@@ -26,67 +27,67 @@ public class PerformanceTest {
         //--------------------------------------------------------Todo Setup--------------------------------------------------------//
 
         FileWriter createTimeTodoCSV = new FileWriter("csv/1-create-todo-object-time.csv");
-        createTimeTodoCSV.append("Total Objects,Time (ms)\n");
+        createTimeTodoCSV.append("Total Objects,Sample Time,Time (ms)\n");
 
         FileWriter modifyTimeTodoCSV = new FileWriter("csv/1-modify-todo-object-time.csv");
-        modifyTimeTodoCSV.append("Total Objects,Time (ms)\n");
+        modifyTimeTodoCSV.append("Total Objects,Sample Time,Time (ms)\n");
 
         FileWriter deleteTimeTodoCSV = new FileWriter("csv/1-delete-todo-object-time.csv");
-        deleteTimeTodoCSV.append("Total Objects,Time (ms)\n");
+        deleteTimeTodoCSV.append("Total Objects,Sample Time,Time (ms)\n");
 
         FileWriter createCPUTodoCSV = new FileWriter("csv/1-create-todo-object-cpu.csv");
-        createCPUTodoCSV.append("Total Objects,CPU Usage\n");
+        createCPUTodoCSV.append("Total Objects, Sample Time,CPU Usage\n");
 
         FileWriter modifyCPUTodoCSV = new FileWriter("csv/1-modify-todo-object-cpu.csv");
-        modifyCPUTodoCSV.append("Total Objects,CPU Usage\n");
+        modifyCPUTodoCSV.append("Total Objects, Sample Time,CPU Usage\n");
 
         FileWriter deleteCPUTodoCSV = new FileWriter("csv/1-delete-todo-object-cpu.csv");
-        deleteCPUTodoCSV.append("Total Objects,CPU Usage\n");
+        deleteCPUTodoCSV.append("Total Objects, Sample Time,CPU Usage\n");
 
         FileWriter createMemoryTodoCSV = new FileWriter("csv/1-create-todo-object-memory.csv");
-        createMemoryTodoCSV.append("Total Objects,Memory Usage (MB)\n");
+        createMemoryTodoCSV.append("Total Objects, Sample Time,Memory Usage (MB)\n");
 
         FileWriter modifyMemoryTodoCSV = new FileWriter("csv/1-modify-todo-object-memory.csv");
-        modifyMemoryTodoCSV.append("Total Objects,Memory Usage (MB)\n");
+        modifyMemoryTodoCSV.append("Total Objects, Sample Time,Memory Usage (MB),\n");
 
         FileWriter deleteMemoryTodoCSV = new FileWriter("csv/1-delete-todo-object-memory.csv");
-        deleteMemoryTodoCSV.append("Total Objects,Memory Usage (MB)\n");
+        deleteMemoryTodoCSV.append("Total Objects, Sample Time,Memory Usage (MB)\n");
 
         TodoTest todoTest = new TodoTest();
 
         //--------------------------------------------------------Category Setup--------------------------------------------------------//
 
         FileWriter createTimeCategoryCSV = new FileWriter("csv/2-create-category-object-time.csv");
-        createTimeCategoryCSV.append("Total Objects,Time (ms)\n");
+        createTimeCategoryCSV.append("Total Objects, Sample Time,Time (ms)\n");
 
         FileWriter modifyTimeCategoryCSV = new FileWriter("csv/2-modify-category-object-time.csv");
-        modifyTimeCategoryCSV.append("Total Objects,Time (ms)\n");
+        modifyTimeCategoryCSV.append("Total Objects, Sample Time,Time (ms)\n");
 
         FileWriter deleteTimeCategoryCSV = new FileWriter("csv/2-delete-category-object-time.csv");
-        deleteTimeCategoryCSV.append("Total Objects,Time (ms)\n");
+        deleteTimeCategoryCSV.append("Total Objects, Sample Time,Time (ms)\n");
 
         FileWriter createCPUCategoryCSV = new FileWriter("csv/2-create-category-object-cpu.csv");
-        createCPUCategoryCSV.append("Total Objects,CPU Usage\n");
+        createCPUCategoryCSV.append("Total Objects, Sample Time,CPU Usage\n");
 
         FileWriter modifyCPUCategoryCSV = new FileWriter("csv/2-modify-category-object-cpu.csv");
-        modifyCPUCategoryCSV.append("Total Objects,CPU Usage\n");
+        modifyCPUCategoryCSV.append("Total Objects, Sample Time,CPU Usage\n");
 
         FileWriter deleteCPUCategoryCSV = new FileWriter("csv/2-delete-category-object-cpu.csv");
-        deleteCPUCategoryCSV.append("Total Objects,CPU Usage\n");
+        deleteCPUCategoryCSV.append("Total Objects, Sample Time,CPU Usage\n");
 
         FileWriter createMemoryCategoryCSV = new FileWriter("csv/2-create-category-object-memory.csv");
-        createMemoryCategoryCSV.append("Total Objects,Memory Usage (MB)\n");
+        createMemoryCategoryCSV.append("Total Objects, Sample Time,Memory Usage (MB)\n");
 
         FileWriter modifyMemoryCategoryCSV = new FileWriter("csv/2-modify-category-object-memory.csv");
-        modifyMemoryCategoryCSV.append("Total Objects,Memory Usage (MB)\n");
+        modifyMemoryCategoryCSV.append("Total Objects, Sample Time,Memory Usage (MB)\n");
 
         FileWriter deleteMemoryCategoryCSV = new FileWriter("csv/2-delete-category-object-memory.csv");
-        deleteMemoryCategoryCSV.append("Total Objects,Memory Usage (MB)\n");
+        deleteMemoryCategoryCSV.append("Total Objects, Sample Time,Memory Usage (MB)\n");
 
         CategoryTest categoryTest = new CategoryTest();
 
         for (int i = 0; i < 1000; i++) {
-
+            long sampleTime = System.currentTimeMillis();
             long startTime;
             long endTime;
             
@@ -99,11 +100,11 @@ public class PerformanceTest {
             todoTest.testCreateTodo();
             endTime = Calendar.getInstance().getTimeInMillis();
 
-            createTimeTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + (endTime-startTime) + "\n");
+            createTimeTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + (endTime-startTime) + "\n");
             createTimeTodoCSV.flush();
 
             double cpu = operatingSystemMXBean.getProcessCpuLoad() * 100;
-            createCPUTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + cpu + "\n");
+            createCPUTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + cpu + "\n");
             createCPUTodoCSV.flush();
 
             long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -112,13 +113,13 @@ public class PerformanceTest {
             double usedMemoryInMB = usedMemory / (1024.0 * 1024.0);
 
             // Log memory usage to deleteCSV
-            createMemoryTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + usedMemoryInMB + "\n");
+            createMemoryTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + usedMemoryInMB + "\n");
             createMemoryTodoCSV.flush();
 
             // Print results for create operation
             System.out.println("Results for Creating Todo operation:");
-            System.out.println("Total instances \tCreate Time");
-            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + (endTime - startTime));
+            System.out.println("Total instances \tSample Time \t\t\tCreate Time");
+            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + sampleTime + "\t\t\t\t\t" + (endTime - startTime));
 
 
             // Modify todo
@@ -126,11 +127,11 @@ public class PerformanceTest {
             todoTest.testModifyTodo();
             endTime = Calendar.getInstance().getTimeInMillis();
 
-            modifyTimeTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + (endTime-startTime) + "\n");
+            modifyTimeTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + (endTime-startTime) + "\n");
             modifyTimeTodoCSV.flush();
 
             cpu = operatingSystemMXBean.getProcessCpuLoad() * 100;
-            modifyCPUTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + cpu + "\n");
+            modifyCPUTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + cpu + "\n");
             modifyCPUTodoCSV.flush();
 
             long modifyMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -139,24 +140,24 @@ public class PerformanceTest {
             double modifyMemoryInMB = modifyMemory / (1024.0 * 1024.0);
 
             // Log memory usage to deleteCSV
-            modifyMemoryTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + modifyMemoryInMB + "\n");
+            modifyMemoryTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + modifyMemoryInMB + "\n");
             modifyMemoryTodoCSV.flush();
 
             // Print results for modify operation
             System.out.println("Results for Modifying Todo operation:");
-            System.out.println("Total instances \tModify Time");
-            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + (endTime - startTime));
+            System.out.println("Total instances \tSample Time \t\t\tModify Time");
+            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + sampleTime + "\t\t\t\t\t" + (endTime - startTime));
 
             // Delete todo
             startTime = Calendar.getInstance().getTimeInMillis();
             todoTest.testDeleteTodo();
             endTime = Calendar.getInstance().getTimeInMillis();
 
-            deleteTimeTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + (endTime-startTime) + "\n");
+            deleteTimeTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + (endTime-startTime) + "\n");
             deleteTimeTodoCSV.flush();
 
             cpu = operatingSystemMXBean.getProcessCpuLoad() * 100;
-            deleteCPUTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + cpu + "\n");
+            deleteCPUTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + cpu + "\n");
             deleteCPUTodoCSV.flush();
 
             long deleteMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -165,17 +166,17 @@ public class PerformanceTest {
             double deleteMemoryInMB = deleteMemory / (1024.0 * 1024.0);
 
             // Log memory usage to deleteCSV
-            deleteMemoryTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + deleteMemoryInMB + "\n");
+            deleteMemoryTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + deleteMemoryInMB + "\n");
             deleteMemoryTodoCSV.flush();
 
             // Print results for delete operation
             System.out.println("Results for Deleting Todo operation:");
-            System.out.println("Total instances \tDelete Time");
-            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + (endTime - startTime));
+            System.out.println("Total instances \tSample Time \t\t\tDelete Time");
+            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + sampleTime + "\t\t\t\t\t" + (endTime - startTime));
         }
 
         for (int i = 0; i < 1000; i++) {
-
+            long sampleTime = System.currentTimeMillis();
             long startTime;
             long endTime;
 
@@ -188,11 +189,11 @@ public class PerformanceTest {
             categoryTest.testCreateCategory();
             endTime = Calendar.getInstance().getTimeInMillis();
 
-            createTimeCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + (endTime-startTime) + "\n");
+            createTimeCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," +  sampleTime + "," + (endTime-startTime) + "\n");
             createTimeCategoryCSV.flush();
 
             double cpu = operatingSystemMXBean.getProcessCpuLoad() * 100;
-            createCPUCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + cpu + "\n");
+            createCPUCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + cpu + "\n");
             createCPUCategoryCSV.flush();
 
             long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -201,24 +202,24 @@ public class PerformanceTest {
             double usedMemoryInMB = usedMemory / (1024.0 * 1024.0);
 
             // Log memory usage to deleteCSV
-            createMemoryCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + usedMemoryInMB + "\n");
+            createMemoryCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + usedMemoryInMB + "\n");
             createMemoryCategoryCSV.flush();
 
             // Print results for create operation
             System.out.println("Results for Creating Category operation:");
-            System.out.println("Total instances \tCreate Time");
-            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + (endTime - startTime));
+            System.out.println("Total instances \tSample Time \t\t\tCreate Time");
+            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + sampleTime + "\t\t\t\t\t" + (endTime - startTime));
 
             // Modify category
             startTime = Calendar.getInstance().getTimeInMillis();
             categoryTest.testModifyCategory();
             endTime = Calendar.getInstance().getTimeInMillis();
 
-            modifyTimeCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + (endTime-startTime) + "\n");
+            modifyTimeCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + (endTime-startTime) + "\n");
             modifyTimeCategoryCSV.flush();
 
             cpu = operatingSystemMXBean.getProcessCpuLoad() * 100;
-            modifyCPUCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + cpu + "\n");
+            modifyCPUCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + cpu + "\n");
             modifyCPUCategoryCSV.flush();
 
             long modifyMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -227,24 +228,24 @@ public class PerformanceTest {
             double modifyMemoryInMB = modifyMemory / (1024.0 * 1024.0);
 
             // Log memory usage to deleteCSV
-            modifyMemoryCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + modifyMemoryInMB + "\n");
+            modifyMemoryCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + modifyMemoryInMB + "\n");
             modifyMemoryCategoryCSV.flush();
 
             // Print results for modify operation
             System.out.println("Results for Modifying Category operation:");
-            System.out.println("Total instances \tModify Time");
-            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + (endTime - startTime));
+            System.out.println("Total instances \tSample Time \t\t\tModify Time");
+            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + sampleTime + "\t\t\t\t\t" + (endTime - startTime));
 
             // Delete todo
             startTime = Calendar.getInstance().getTimeInMillis();
             categoryTest.testDeleteCategory();
             endTime = Calendar.getInstance().getTimeInMillis();
 
-            deleteTimeTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + (endTime-startTime) + "\n");
+            deleteTimeTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + (endTime-startTime) + "\n");
             deleteTimeTodoCSV.flush();
 
             cpu = operatingSystemMXBean.getProcessCpuLoad() * 100;
-            deleteCPUCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + cpu + "\n");
+            deleteCPUCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + cpu + "\n");
             deleteCPUCategoryCSV.flush();
 
             long deleteMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -253,13 +254,13 @@ public class PerformanceTest {
             double deleteMemoryInMB = deleteMemory / (1024.0 * 1024.0);
 
             // Log memory usage to deleteCSV
-            deleteMemoryCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + deleteMemoryInMB + "\n");
+            deleteMemoryCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + sampleTime + "," + deleteMemoryInMB + "\n");
             deleteMemoryCategoryCSV.flush();
 
             // Print results for delete operation
             System.out.println("Results for Deleting Category operation:");
-            System.out.println("Total instances \tDelete Time");
-            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + (endTime - startTime));
+            System.out.println("Total instances \tSample Time \t\t\tDelete Time");
+            System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + sampleTime + "\t\t\t\t\t" + (endTime - startTime));
         }
     }
 
