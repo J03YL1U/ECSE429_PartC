@@ -25,62 +25,62 @@ public class PerformanceTest {
 
         //--------------------------------------------------------Todo Setup--------------------------------------------------------//
 
-        FileWriter createTimeTodoCSV = new FileWriter("csv/create-todo-object-time.csv");
+        FileWriter createTimeTodoCSV = new FileWriter("csv/1-create-todo-object-time.csv");
         createTimeTodoCSV.append("Total Objects,Time (ms)\n");
 
-        FileWriter modifyTimeTodoCSV = new FileWriter("csv/modify-todo-object-time.csv");
+        FileWriter modifyTimeTodoCSV = new FileWriter("csv/1-modify-todo-object-time.csv");
         modifyTimeTodoCSV.append("Total Objects,Time (ms)\n");
 
-        FileWriter deleteTimeTodoCSV = new FileWriter("csv/delete-todo-object-time.csv");
+        FileWriter deleteTimeTodoCSV = new FileWriter("csv/1-delete-todo-object-time.csv");
         deleteTimeTodoCSV.append("Total Objects,Time (ms)\n");
 
-        FileWriter createCPUTodoCSV = new FileWriter("csv/create-todo-object-cpu.csv");
+        FileWriter createCPUTodoCSV = new FileWriter("csv/1-create-todo-object-cpu.csv");
         createCPUTodoCSV.append("Total Objects,CPU Usage\n");
 
-        FileWriter modifyCPUTodoCSV = new FileWriter("csv/modify-todo-object-cpu.csv");
+        FileWriter modifyCPUTodoCSV = new FileWriter("csv/1-modify-todo-object-cpu.csv");
         modifyCPUTodoCSV.append("Total Objects,CPU Usage\n");
 
-        FileWriter deleteCPUTodoCSV = new FileWriter("csv/delete-todo-object-cpu.csv");
+        FileWriter deleteCPUTodoCSV = new FileWriter("csv/1-delete-todo-object-cpu.csv");
         deleteCPUTodoCSV.append("Total Objects,CPU Usage\n");
 
-        FileWriter createMemoryTodoCSV = new FileWriter("csv/create-todo-object-memory.csv");
+        FileWriter createMemoryTodoCSV = new FileWriter("csv/1-create-todo-object-memory.csv");
         createMemoryTodoCSV.append("Total Objects,Memory Usage (MB)\n");
 
-        FileWriter modifyMemoryTodoCSV = new FileWriter("csv/modify-todo-object-memory.csv");
+        FileWriter modifyMemoryTodoCSV = new FileWriter("csv/1-modify-todo-object-memory.csv");
         modifyMemoryTodoCSV.append("Total Objects,Memory Usage (MB)\n");
 
-        FileWriter deleteMemoryTodoCSV = new FileWriter("csv/delete-todo-object-memory.csv");
+        FileWriter deleteMemoryTodoCSV = new FileWriter("csv/1-delete-todo-object-memory.csv");
         deleteMemoryTodoCSV.append("Total Objects,Memory Usage (MB)\n");
 
         TodoTest todoTest = new TodoTest();
 
         //--------------------------------------------------------Category Setup--------------------------------------------------------//
 
-        FileWriter createTimeCategoryCSV = new FileWriter("csv/create-category-object-time.csv");
+        FileWriter createTimeCategoryCSV = new FileWriter("csv/2-create-category-object-time.csv");
         createTimeCategoryCSV.append("Total Objects,Time (ms)\n");
 
-        FileWriter modifyTimeCategoryCSV = new FileWriter("csv/modify-category-object-time.csv");
+        FileWriter modifyTimeCategoryCSV = new FileWriter("csv/2-modify-category-object-time.csv");
         modifyTimeCategoryCSV.append("Total Objects,Time (ms)\n");
 
-        FileWriter deleteTimeCategoryCSV = new FileWriter("csv/delete-category-object-time.csv");
+        FileWriter deleteTimeCategoryCSV = new FileWriter("csv/2-delete-category-object-time.csv");
         deleteTimeCategoryCSV.append("Total Objects,Time (ms)\n");
 
-        FileWriter createCPUCategoryCSV = new FileWriter("csv/create-category-object-cpu.csv");
+        FileWriter createCPUCategoryCSV = new FileWriter("csv/2-create-category-object-cpu.csv");
         createCPUCategoryCSV.append("Total Objects,CPU Usage\n");
 
-        FileWriter modifyCPUCategoryCSV = new FileWriter("csv/modify-category-object-cpu.csv");
+        FileWriter modifyCPUCategoryCSV = new FileWriter("csv/2-modify-category-object-cpu.csv");
         modifyCPUCategoryCSV.append("Total Objects,CPU Usage\n");
 
-        FileWriter deleteCPUCategoryCSV = new FileWriter("csv/delete-category-object-cpu.csv");
+        FileWriter deleteCPUCategoryCSV = new FileWriter("csv/2-delete-category-object-cpu.csv");
         deleteCPUCategoryCSV.append("Total Objects,CPU Usage\n");
 
-        FileWriter createMemoryCategoryCSV = new FileWriter("csv/create-category-object-memory.csv");
+        FileWriter createMemoryCategoryCSV = new FileWriter("csv/2-create-category-object-memory.csv");
         createMemoryCategoryCSV.append("Total Objects,Memory Usage (MB)\n");
 
-        FileWriter modifyMemoryCategoryCSV = new FileWriter("csv/modify-category-object-memory.csv");
+        FileWriter modifyMemoryCategoryCSV = new FileWriter("csv/2-modify-category-object-memory.csv");
         modifyMemoryCategoryCSV.append("Total Objects,Memory Usage (MB)\n");
 
-        FileWriter deleteMemoryCategoryCSV = new FileWriter("csv/delete-category-object-memory.csv");
+        FileWriter deleteMemoryCategoryCSV = new FileWriter("csv/2-delete-category-object-memory.csv");
         deleteMemoryCategoryCSV.append("Total Objects,Memory Usage (MB)\n");
 
         CategoryTest categoryTest = new CategoryTest();
@@ -185,7 +185,7 @@ public class PerformanceTest {
 
             // Create category
             start_time = Calendar.getInstance().getTimeInMillis();
-            todoTest.testCreateTodo();
+            categoryTest.testCreateCategory();
             end_time = Calendar.getInstance().getTimeInMillis();
 
             createTimeCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + (end_time-start_time) + "\n");
@@ -211,7 +211,7 @@ public class PerformanceTest {
 
             // Modify category
             start_time = Calendar.getInstance().getTimeInMillis();
-            todoTest.testModifyTodo();
+            categoryTest.testModifyCategory();
             end_time = Calendar.getInstance().getTimeInMillis();
 
             modifyTimeCategoryCSV.append(TOTAL_OBJECTS_CREATED + "," + (end_time-start_time) + "\n");
@@ -237,7 +237,7 @@ public class PerformanceTest {
 
             // Delete todo
             start_time = Calendar.getInstance().getTimeInMillis();
-            todoTest.testDeleteTodo();
+            categoryTest.testDeleteCategory();
             end_time = Calendar.getInstance().getTimeInMillis();
 
             deleteTimeTodoCSV.append(TOTAL_OBJECTS_CREATED + "," + (end_time-start_time) + "\n");
