@@ -3,7 +3,6 @@ package ApiTests;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
-import java.time.LocalTime;
 import java.util.Calendar;
 
 import com.sun.management.OperatingSystemMXBean;
@@ -15,8 +14,6 @@ import io.restassured.specification.RequestSpecification;
 import org.json.simple.JSONObject;
 
 import java.util.Random;
-
-import static org.hamcrest.core.IsEqual.equalTo;
 
 public class PerformanceTest {
     //Authors: Joey Liu, Ke Yan, Abiola Olaniyan, Mihail Cali
@@ -635,6 +632,75 @@ public class PerformanceTest {
             System.out.println("Total instances \tSample Time \t\t\tDelete Time");
             System.out.println(TOTAL_OBJECTS_CREATED + "\t\t\t\t\t" + sampleTime + "\t\t\t\t\t" + (endTime - startTime));
         }
+
+        // Clean up file writers for todos
+        createTimeTodoCSV.close();
+        modifyTimeTodoCSV.close();
+        deleteTimeTodoCSV.close();
+
+        createCPUTodoCSV.close();
+        modifyCPUTodoCSV.close();
+        deleteCPUTodoCSV.close();
+
+        createMemoryTodoCSV.close();
+        modifyMemoryTodoCSV.close();
+        deleteMemoryTodoCSV.close();
+
+        // Clean up file writers for categories
+        createTimeCategoryCSV.close();
+        modifyTimeCategoryCSV.close();
+        deleteTimeCategoryCSV.close();
+
+        createCPUCategoryCSV.close();
+        modifyCPUCategoryCSV.close();
+        deleteCPUCategoryCSV.close();
+
+        createMemoryCategoryCSV.close();
+        modifyMemoryCategoryCSV.close();
+        deleteMemoryCategoryCSV.close();
+
+        // Clean up file writers for projects
+        createTimeProjectCSV.close();
+        modifyTimeProjectCSV.close();
+        deleteTimeProjectCSV.close();
+
+        createCPUProjectCSV.close();
+        modifyCPUProjectCSV.close();
+        deleteCPUProjectCSV.close();
+
+        createMemoryProjectCSV.close();
+        modifyMemoryProjectCSV.close();
+        deleteMemoryProjectCSV.close();
+
+        // Clean up file writers for interop. projects and categories
+        createTimeInterProjCatCSV.close();
+        deleteTimeInterProjCatCSV.close();
+
+        createCPUInterProjCatCSV.close();
+        deleteCPUInterProjCatCSV.close();
+
+        createMemoryInterProjCatCSV.close();
+        deleteMemoryInterProjCatCSV.close();
+
+        // Clean up file writers for interop. of categories and todos
+        createTimeInterCatTodoCSV.close();
+        deleteTimeInterCatTodoCSV.close();
+
+        createCPUInterCatTodoCSV.close();
+        deleteCPUInterCatTodoCSV.close();
+
+        createMemoryInterCatTodoCSV.close();
+        deleteMemoryInterCatTodoCSV.close();
+
+        // Clean up file writers for interop. of todos and projects
+        createTimeInterTodoProjCSV.close();
+        deleteTimeInterTodoProjCSV.close();
+
+        createCPUInterTodoProjCSV.close();
+        deleteCPUInterTodoProjCSV.close();
+
+        createMemoryInterTodoProjCSV.close();
+        deleteMemoryInterTodoProjCSV.close();
     }
 
     /*
