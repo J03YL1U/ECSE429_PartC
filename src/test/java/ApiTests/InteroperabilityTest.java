@@ -125,7 +125,7 @@ public class InteroperabilityTest {
 
         // Send the request
         Response todoResponse = RestAssured.given().body(todoObj.toJSONString())
-                .post("/categories/" + projectID + "/todos");
+                .post("/categories/" + categoryID + "/todos");
         todoResponse.then();
 
         responseBody = todoResponse.getBody().asString();

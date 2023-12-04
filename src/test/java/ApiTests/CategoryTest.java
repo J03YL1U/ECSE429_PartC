@@ -10,33 +10,30 @@ import org.junit.Test;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 
-
-public class TodoTest {
+public class CategoryTest {
 
     int ID;
 
-    public TodoTest() {
+    public CategoryTest() {
         RestAssured.baseURI = "http://localhost:4567";
     }
 
-    // create todo object and populate it with random data
+    //create project object and populate it with random data
     @Test
-    public void testCreateTodo() throws JSONException {
+    public void testCreateCategory() throws JSONException {
 
         String title = "title";
-        boolean doneStatus = false;
         String description = "description";
 
         RequestSpecification request = RestAssured.given();
 
         JSONObject requestParams = new JSONObject();
-        requestParams.put("title", title);
-        requestParams.put("doneStatus", doneStatus);
-        requestParams.put("description", description);
+        requestParams.put("title",title);
+        requestParams.put("description",description);
 
         request.body(requestParams.toJSONString());
 
-        Response response = request.post("/todos");
+        Response response = request.post("/categories");
         response.then();
         String body = response.getBody().asString();
         org.json.JSONObject jsonResponse = new org.json.JSONObject(body);
@@ -46,47 +43,41 @@ public class TodoTest {
                 .assertThat()
                 .statusCode(equalTo(201))
                 .body("title", equalTo(title),
-                        "doneStatus", equalTo(String.valueOf(doneStatus)),
                         "description", equalTo(description));
     }
 
-    // edit todo object that we created
+    // edit project object
     @Test
-    public void testModifyTodo() {
+    public void testModifyCategory() {
 
-        int todoId = ID;
-        String newTitle = "new title";
-        boolean newDoneStatus = true;
-        String newDescription = "new description";
+        int categoryID = ID;
+        String newTitle = "title";
+        String newDescription = "description";
 
         RequestSpecification request = RestAssured.given();
-
         JSONObject requestParams = new JSONObject();
-
         requestParams.put("title", newTitle);
-        requestParams.put("doneStatus", newDoneStatus);
         requestParams.put("description", newDescription);
 
         request.body(requestParams.toJSONString());
 
-        Response response = request.post("/todos/" + todoId);
+        Response response = request.post("/categories/" + categoryID);
 
         response.then()
                 .assertThat()
                 .statusCode(equalTo(200))
                 .body("title", equalTo(newTitle),
-                        "doneStatus", equalTo(String.valueOf(newDoneStatus)),
                         "description", equalTo(newDescription));
     }
 
-    // delete the same todo object
+    //delete project object
     @Test
-    public void testDeleteTodo() {
-        int todoId = ID;
-
+    public void testDeleteCategory(){
+        int categoryID = ID;
         RequestSpecification request = RestAssured.given();
-
-        request.delete("/todos/" + todoId).then().assertThat().statusCode(200);
+        request.delete("/categories/" + categoryID).then().assertThat().statusCode(200);
     }
+
+
 
 }
