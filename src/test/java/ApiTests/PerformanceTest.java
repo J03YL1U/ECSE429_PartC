@@ -3,6 +3,7 @@ package ApiTests;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.time.LocalTime;
 import java.util.Calendar;
 
 import com.sun.management.OperatingSystemMXBean;
@@ -178,7 +179,7 @@ public class PerformanceTest {
 
         // Todos
         for (int i = 0; i < 1000; i++) {
-            long sampleTime = System.currentTimeMillis();
+            LocalTime sampleTime = LocalTime.now();
             long startTime;
             long endTime;
             
@@ -268,7 +269,7 @@ public class PerformanceTest {
 
         // Categories
         for (int i = 0; i < 1000; i++) {
-            long sampleTime = System.currentTimeMillis();
+            LocalTime sampleTime = LocalTime.now();
             long startTime;
             long endTime;
 
@@ -357,7 +358,7 @@ public class PerformanceTest {
 
         // Projects
         for (int i = 0; i < 1000; i++) {
-            long sampleTime = System.currentTimeMillis();
+            LocalTime sampleTime = LocalTime.now();
             long startTime;
             long endTime;
 
@@ -446,7 +447,7 @@ public class PerformanceTest {
 
         // Interop. of Projects and Categories
         for (int i = 0; i < 1000; i++) {
-            long sampleTime = System.currentTimeMillis();
+            LocalTime sampleTime = LocalTime.now();
             long startTime;
             long endTime;
 
@@ -509,7 +510,7 @@ public class PerformanceTest {
 
         // Interop. of Categories and Todos
         for (int i = 0; i < 1000; i++) {
-            long sampleTime = System.currentTimeMillis();
+            LocalTime sampleTime = LocalTime.now();
             long startTime;
             long endTime;
 
@@ -572,7 +573,7 @@ public class PerformanceTest {
 
         // Interop. of Todos and Projects
         for (int i = 0; i < 1000; i++) {
-            long sampleTime = System.currentTimeMillis();
+            LocalTime sampleTime = LocalTime.now();
             long startTime;
             long endTime;
 
